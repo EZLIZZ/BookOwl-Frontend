@@ -8,6 +8,7 @@ import You from "../_components/You";
 import Recommendations from "../_components/Recommendation";
 import AddReview from "../_components/AddReview";
 import axios from "axios";
+import $axios from "@/lib/axios.instance";
 
 export default function BookDetailsId() {
   const { slug } = useParams();
