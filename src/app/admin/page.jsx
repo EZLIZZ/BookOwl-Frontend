@@ -1,24 +1,36 @@
-"use client"
+"use client";
 import { useRouter } from "next/navigation";
 import Dashboard from "./_components/Dashboard";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
-const Admin=()=>{
-    const router = useRouter();
-    const role = localStorage.getItem("role");
-    console.log("my role", role);
-    useEffect(()=>{
-        if (role !== "admin")
-        router.push("/login");
-    },[role,router]);
+const Admin = () => {
+  const router = useRouter();
+  const [role, setRole] = useState(null);  // role state
 
-    if (role !== "admin"){
-        return <>loading...</>
+  useEffect(() => {
+    const storedRole = localStorage.getItem("role");
+    setRole(storedRole);
+
+    if (storedRole !== "admin") {
+      router.push("/login");
     }
-    return(
-        <div className="overflow-hidden"> 
-            <Dashboard/>
-        </div>
-    )
-}
+  }, [router]);
+
+  if (role === null) {
+    // Still loading role from localStorage
+    return <>Loading...</>;
+  }
+
+  if (role !== "admin") {
+    // Redirecting - or can show some message
+    return <>Access denied</>;
+  }
+
+  return (
+    <div className="overflow-hidden">
+      <Dashboard />
+    </div>
+  );
+};
+
 export default Admin;

@@ -31,12 +31,20 @@ const profileSchema = z.object({
   }),
 });
 
-export default function ProfilePage() {
+export default function EditProfile() {
   const [profile, setProfile] = useState(null); // Profile state
   const [loading, setLoading] = useState(true); // Loading state
   const [image, setImage] = useState(null); // Image state for profile picture
   const router = useRouter();
-  const userId = localStorage.getItem("id"); // Get user ID from localStorage
+  const [userId, setUserId] = useState(null);
+
+useEffect(() => {
+  if (typeof window !== "undefined") {
+    const storedId = localStorage.getItem("id");
+    setUserId(storedId);
+  }
+}, []);
+
 
   // React Hook Form setup
   const form = useForm({
@@ -52,21 +60,24 @@ export default function ProfilePage() {
 
   // Fetch user profile data
   useEffect(() => {
-    const getData = async () => {
-      try {
-        const response = await $axios.get(`/userProfile/getUserById/${userId}`);
-        if (response && response.status === 200) {
-          setProfile(response.data.data); // Set profile state
-        }
-      } catch (error) {
-        console.error("Error fetching profile:", error);
-      } finally {
-        setLoading(false); // Ensure loading stops even on error
-      }
-    };
+  const getData = async () => {
+    if (!userId) return;
 
-    getData();
-  }, [userId]);
+    try {
+      const response = await $axios.get(`/userProfile/getUserById/${userId}`);
+      if (response && response.status === 200) {
+        setProfile(response.data.data);
+      }
+    } catch (error) {
+      console.error("Error fetching profile:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  getData();
+}, [userId]);
+
 
   // Update form values when profile data is fetched
   useEffect(() => {
@@ -82,19 +93,22 @@ export default function ProfilePage() {
 
   // Form submission
   const onSubmit = async (data) => {
-    try {
-      const updatedData = { ...data, image }; // Include the updated image if available
-      const UpdateResponse = await $axios.put(
-        `/userProfile/updateUser/${userId}`,
-        updatedData
-      );
-      console.log("Profile Updated:", UpdateResponse);
-      alert("Profile Updated Successfully!");
-      router.push("/pages/userdashboard");
-    } catch (error) {
-      console.error("Error submitting form:", error);
-    }
-  };
+  if (!userId) return;
+
+  try {
+    const updatedData = { ...data, image };
+    const UpdateResponse = await $axios.put(
+      `/userProfile/updateUser/${userId}`,
+      updatedData
+    );
+    console.log("Profile Updated:", UpdateResponse);
+    alert("Profile Updated Successfully!");
+    router.push("/pages/userdashboard");
+  } catch (error) {
+    console.error("Error submitting form:", error);
+  }
+};
+
 
   // Handle file input change
   const handleFileChange = (e) => {
