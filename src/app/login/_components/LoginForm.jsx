@@ -25,7 +25,6 @@ export default function LoginPage() {
   const [error, setError] = useState("");
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const [showErrorModal, setShowErrorModal] = useState(false);
-  const [isForgetVisible, setIsForgetVisible] = useState(false); // State to manage modal visibility
   const router = useRouter();
 
   const form = useForm({

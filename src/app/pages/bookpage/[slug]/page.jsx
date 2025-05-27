@@ -13,7 +13,6 @@ export default function BookDetailsId() {
   const { slug } = useParams();
   const [data, setData] = useState();
   const [recom, setRecom] = useState();
-  const [error, setError] = useState(null);
 
   console.log(slug);
 

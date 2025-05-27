@@ -16,7 +16,6 @@ import {
 import { Card } from "@/components/ui/card";
 import { Mail, Eye, EyeOff, User, Lock, Phone } from "lucide-react";
 import $axios from "@/lib/axios.instance";
-import { useRouter } from "next/navigation";
 
 const formSchema = z.object({
   name: z.string().min(5, { message: "Name must be at least 5 characters." }),
@@ -41,7 +40,6 @@ export default function SignUpPage() {
   const [isOTPVisible, setIsOTPVisible] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const router = useRouter();
 
   const form = useForm({
     resolver: zodResolver(formSchema),
@@ -58,7 +56,6 @@ export default function SignUpPage() {
     try {
       const response = await $axios.post("/auth/register", values);
       localStorage.setItem("email", values.email);
-      console.log(response);
       if (response?.status === 200) {
         setIsOTPVisible(true);
       }
@@ -281,7 +278,9 @@ export default function SignUpPage() {
                     </FormItem>
                   )}
                 />
-
+{error && (
+  <p className="text-red-500 text-sm text-center">{error}</p>
+)}
                 {/* Submit Button */}
                 <Button
                   className="bg-[#5d768a] rounded-full w-[150px] flex items-center justify-center"

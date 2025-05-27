@@ -6,7 +6,6 @@ import { z } from "zod";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
-import Link from "next/link";
 import {
   Form,
   FormControl,
@@ -85,7 +84,7 @@ export default function ForgotPassword({ email }) {
       }
       console.log("Entered email:", email);
     } catch (error) {
-      console.error();
+      console.error("Submit error:", error);
     }
     toast.success(
       "OTP verified successfully! You can now reset your password."

@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
-import { Home, History, Heart, MessageSquare, UserCircle, Settings } from "lucide-react";
+import { Home, MessageSquare, UserCircle, Settings } from "lucide-react";
 
 const UserSidebar = () => {
   const router = useRouter();

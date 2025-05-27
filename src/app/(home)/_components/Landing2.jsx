@@ -20,7 +20,7 @@ export default function Landing2() {
           <span className="text-[#265073]">Personalized </span>  Book Recommendations
           </h1>
           <p className="text-lg ">
-          " Every book you click on will be tailor made for you based on your preference."
+          &quot; Every book you click on will be tailor made for you based on your preference.&quot;
           </p>
         </div>
       </div>
@@ -33,7 +33,7 @@ export default function Landing2() {
           <h1 className=" sm:text-5xl text-xl leading-loose  sm:my-10 my-2">
           <span className="text-[#265073]">Real Reviews </span>  from     <span className="text-[#265073]">Real Readers </span>
           </h1>
-          <p className="text-lg">"Let the stories of fellow readers guide you to your next adventure."
+          <p className="text-lg">&quot;Let the stories of fellow readers guide you to your next adventure.&quot;
           </p>
         </div>
         <div className="">
