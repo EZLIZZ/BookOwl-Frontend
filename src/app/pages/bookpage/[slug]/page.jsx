@@ -41,7 +41,7 @@ export default function BookDetailsId() {
 
   const getRecom = async () => {
     try {
-      const Recomres = await $axios.get(`/recommend/${slug}`);
+      const Recomres = await $axios.get(`https://bookowlai.onrender.com/recommend/${slug}`);
       console.log("Recommmendations:", Recomres);
       if (!Recomres) {
         throw new Error(`HTTP error status: ${Recomres.status}`);
