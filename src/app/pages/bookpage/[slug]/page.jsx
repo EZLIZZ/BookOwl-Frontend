@@ -1,13 +1,13 @@
 "use client";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import $axios from "../../../../lib/axios.instance";
 import Starting from "../_components/Starting";
 import Author from "../_components/Author";
 import DisplayReview from "../_components/DisplayReview";
 import You from "../_components/You";
 import Recommendations from "../_components/Recommendation";
 import AddReview from "../_components/AddReview";
+import axios from "axios";
 
 export default function BookDetailsId() {
   const { slug } = useParams();
@@ -41,7 +41,7 @@ export default function BookDetailsId() {
 
   const getRecom = async () => {
     try {
-      const Recomres = await $axios.get(`https://bookowlai.onrender.com/recommend/${slug}`);
+      const Recomres = await axios.get(`https://bookowlai.onrender.com/recommend/${slug}`);
       console.log("Recommmendations:", Recomres);
       if (!Recomres) {
         throw new Error(`HTTP error status: ${Recomres.status}`);
