@@ -79,7 +79,7 @@ export default function DealsCarousel({ data }) {
   return (
     <div className="bg-white py-8 px-4  rounded-lg shadow-md border mx-[5%] -mt-3">
       <Swiper
-        slidesPerView={4}
+        slidesPerView={2}
         spaceBetween={20}
         navigation={true}
         modules={[Navigation]}

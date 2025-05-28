@@ -6,7 +6,7 @@ import Link from "next/link"
 export default function FirstDesign() {
   return (
     <div
-      className="h-screen px-[5%] sm:pt-[80px] pt-[100px] bg-[#af886b] text-white p-8 flex flex-col lg:flex-row items-center justify-between"
+      className=" px-[5%] sm:pt-[80px] pt-[100px] bg-[#af886b] text-white p-8 flex flex-col lg:flex-row items-center justify-between"
       data-aos="fade-down"
     >
       {/* Left Section */}

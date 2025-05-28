@@ -1,4 +1,5 @@
 "use client"; // For client-side rendering
+
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/navigation";
@@ -7,60 +8,70 @@ import { useEffect, useState } from "react";
 import $axios from "@/lib/axios.instance";
 import { useRouter } from "next/navigation";
 
-
 const CollectionCarousel = () => {
   const router = useRouter();
   const [data, setData] = useState([]);
+  const [error, setError] = useState("");
+
   useEffect(() => {
     getData();
   }, []);
 
-const getData = async () => {
+  const getData = async () => {
     try {
       const response = await $axios.get("/category/getCategory");
-
-      // Check if the response has the expected structure
-      if (response && response.data && response.data.data) {
+      if (response?.data?.data) {
         setData(response.data.data);
       } else {
         setError("Unexpected response structure");
       }
     } catch (err) {
-      // If an error occurs during the API call, set the error state
       setError(`Error fetching data: ${err.message}`);
     }
   };
+
   const handleClick = (id) => {
-  router.push(`/pages/categorypage?category=${id}`)
-  }
-  
+    router.push(`/pages/categorypage?category=${id}`);
+  };
+
   return (
-    <div className="bg-white py-8 px-4 mt-16 h-52 rounded-full ml-10 mr-10 border border-black">
+    <div className="bg-white mt-10 px-4 sm:px-6 md:px-10 lg:px-16 sm:py-10 py-5 rounded-full border border-black mx-4 sm:mx-6 md:mx-10 lg:mx-20">
       <Swiper
-        slidesPerView={4}
+        slidesPerView={2}
         spaceBetween={20}
         navigation={true}
         modules={[Navigation]}
         className="mySwiper"
         breakpoints={{
-          640: { slidesPerView: 1 },
-          768: { slidesPerView: 2 },
+          640: { slidesPerView: 2 },
+          768: { slidesPerView: 3 },
           1024: { slidesPerView: 4 },
+          1280: { slidesPerView: 5 },
         }}
       >
         {data.map((category) => (
           <SwiperSlide key={category._id}>
-            <div className="flex flex-col items-center space-y-2" onClick={()=>handleClick(category._id)}>
-              <div className="h-16 w-16 mt-7 text-white flex items-center justify-center rounded-full bg-slate-400 text-xl">
-                {/* {category.icon} */}
-                {/* <Heart  size={24} />  */}
-               <img src= {category.categoryIcon} className="p-2" />
+            <div
+              onClick={() => handleClick(category._id)}
+              className="flex flex-col items-center justify-center text-center space-y-2 cursor-pointer hover:scale-105 transition-transform duration-300"
+            >
+              <div className="h-14 w-14  sm:h-16 sm:w-16 flex items-center justify-center rounded-full bg-slate-400 overflow-hidden">
+                <img
+                  src={category.categoryIcon}
+                  alt={category.categoryName}
+                  className="p-1 sm:p-2 w-3/4 h-3/4 object-contain"
+                />
               </div>
-              <h3 className="text-lg font-bold">{category.categoryName}</h3>
+              <h3 className="text-sm sm:text-base font-semibold text-gray-700 truncate w-24">
+                {category.categoryName}
+              </h3>
             </div>
           </SwiperSlide>
         ))}
       </Swiper>
+      {error && (
+        <p className="mt-4 text-red-500 text-center text-sm">{error}</p>
+      )}
     </div>
   );
 };
