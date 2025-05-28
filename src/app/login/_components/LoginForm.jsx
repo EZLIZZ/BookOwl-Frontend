@@ -13,7 +13,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Card } from "@/components/ui/card";
-import { Mail, Eye, EyeOff, Lock, CloudCog } from "lucide-react";
+import { Mail, Eye, EyeOff, Lock } from "lucide-react";
 import $axios from "@/lib/axios.instance";
 import { useRouter } from "next/navigation";
 
