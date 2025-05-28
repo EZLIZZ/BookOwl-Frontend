@@ -15,10 +15,10 @@ export default function Footer1() {
         </div>
 
         {/* Quick Links, Contact Us, and Location in Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-60">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 sm:gap-60 gap-10">
           {/* Quick Links Section */}
           <div className="text-gray-600 w-60  ">
-            <p className="font-bold pb-4 text-lg sm:text-xl text-[#B83214]">Quick Links</p>
+            <p className="font-bold sm:pb-4 pb-2 text-lg sm:text-xl text-[#B83214]">Quick Links</p>
             <Link href="/pages/about-us">
               <h1 className="cursor-pointer hover:underline text-sm sm:text-base">About us</h1>
             </Link>
@@ -35,7 +35,7 @@ export default function Footer1() {
 
           {/* Contact Us Section */}
           <div className="text-gray-600 w-60 ">
-            <p className="font-bold pb-4 text-lg sm:text-xl text-[#B83214]">Contact us</p>
+            <p className="font-bold sm:pb-4 pb-2 text-lg sm:text-xl text-[#B83214]">Contact us</p>
             <h1 className="text-sm sm:text-base flex items-center gap-2">
               <Phone /> +977 9843987416
             </h1>
@@ -46,7 +46,7 @@ export default function Footer1() {
 
           {/* Location Section */}
           <div className="text-gray-600 w-72 ">
-            <p className="font-bold pb-4 text-lg sm:text-xl text-[#B83214]">Our Location</p>
+            <p className="font-bold sm:pb-4 pb-2 text-lg sm:text-xl text-[#B83214]">Our Location</p>
             <p className="text-sm sm:text-base">Visit us at:</p>
             <p className="text-sm sm:text-base">
               Nepal College of Information Technology (NCIT), Balkumari, Lalitpur, Nepal.

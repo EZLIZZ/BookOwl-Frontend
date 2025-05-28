@@ -10,55 +10,80 @@ import AddReview from "../_components/AddReview";
 import axios from "axios";
 import $axios from "@/lib/axios.instance";
 
-export default function BookDetailsId() {
+export default function BookPage() {
   const { slug } = useParams();
-  const [data, setData] = useState();
-  const [recom, setRecom] = useState();
+  const [data, setData] = useState(null);
+  const [recom, setRecom] = useState(null);
+  const [error, setError] = useState(null);
 
-  console.log(slug);
-
+  // Fetch book details
   useEffect(() => {
-    const fetchData = async () => {
+    if (!slug) {
+      console.warn("slug is not defined yet");
+      return;
+    }
+
+    async function fetchData() {
       try {
+        console.log("Fetching book data for slug:", slug);
         const response = await $axios.get(`/book/getBookById/${slug}`);
-        console.log(response);
-        if (!response) {
-          throw new Error(`HTTP error status: ${response.status}`);
+
+        if (!response || response.status !== 200) {
+          throw new Error(`HTTP error status: ${response?.status || "No response"}`);
         }
-        setData(response?.data.data);
-      } catch (error) {
-        console.error("Failed to fetch book data:", error);
+        if (!response.data || !response.data.data) {
+          throw new Error("Response data format unexpected");
+        }
+
+        setData(response.data.data);
+        setError(null);
+      } catch (err) {
+        console.error("Failed to fetch book data:", err);
+        setError(err.message || "Failed to fetch book data.");
       }
-    };
+    }
 
     fetchData();
-  }, [slug]); // Include `slug` as a dependency
-
-  useEffect(() => {
-    if (slug) {
-      getRecom();
-    }
   }, [slug]);
 
-  const getRecom = async () => {
-    try {
-      const Recomres = await axios.get(`https://bookowlai.onrender.com/recommend/${slug}`);
-      console.log("Recommmendations:", Recomres);
-      if (!Recomres) {
-        throw new Error(`HTTP error status: ${Recomres.status}`);
-      }
-      setRecom(Recomres?.data.recommendations);
-      console.log("REcom", Recomres?.data.recommendations);
-    } catch (error) {
-      setError(
-        error.message || "An error occurred while fetching recommendations."
-      ); 
+  // Fetch recommendations
+  useEffect(() => {
+    if (!slug) {
+      console.warn("slug is not defined yet for recommendations");
+      return;
     }
-  };
-  if (!data) {
-    return <p>Loading...</p>; // Show loading state while data is being fetched
+
+    async function getRecom() {
+      try {
+        console.log("Fetching recommendations for slug:", slug);
+        const Recomres = await axios.get(`https://bookowlai.onrender.com/recommend/${slug}`);
+
+        if (!Recomres || Recomres.status !== 200) {
+          throw new Error(`HTTP error status: ${Recomres?.status || "No response"}`);
+        }
+        if (!Recomres.data || !Recomres.data.recommendations) {
+          throw new Error("Recommendations response format unexpected");
+        }
+
+        setRecom(Recomres.data.recommendations);
+        setError(null);
+      } catch (err) {
+        console.error("Failed to fetch recommendations:", err);
+        setError(err.message || "An error occurred while fetching recommendations.");
+      }
+    }
+
+    getRecom();
+  }, [slug]);
+
+  if (error) {
+    return <p style={{ color: "red" }}>{error}</p>;
   }
- 
+
+  if (!data) {
+    return <p>Loading book details...</p>;
+  }
+
   return (
     <>
       <Starting data={data} />
@@ -66,7 +91,6 @@ export default function BookDetailsId() {
       <AddReview bookData={data} />
       <DisplayReview data={data} />
       <You />
-     
       {recom && <Recommendations data={recom} />}
     </>
   );

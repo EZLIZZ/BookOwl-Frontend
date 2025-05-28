@@ -30,7 +30,7 @@ const Review =[
 export default function HappyReaders(){
     return(
         <div className="my-[100px] ">
-            <h1 className="text-5xl font-semibold text-center text-[#265073] mb-[50px] " data-aos="fade-down">Join Happy Readers</h1>
+            <h1 className="sm:text-5xl text-2xl font-semibold text-center text-[#265073] mb-[50px] " data-aos="fade-down">Join Happy Readers</h1>
             <div className="grid md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-8 text-center mx-[20%] ">
                 
                     {Review.map((items)=>(

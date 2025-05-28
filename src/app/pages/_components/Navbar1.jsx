@@ -45,9 +45,10 @@ export default function Navbar1() {
 
   const logout = async () => {
     try {
-      localStorage.clear();
       await $axios.post("/auth/logout");
+          localStorage.clear();
       router.push("/login");
+  
     } catch (error) {
       console.log(error);
     }
