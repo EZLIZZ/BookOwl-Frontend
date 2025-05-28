@@ -2,6 +2,8 @@
 import { useState, useEffect } from "react";
 import { Separator } from "@/components/ui/separator";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { Button } from "@/components/ui/button";
+import { Filter } from "lucide-react";
 import BookCard from "./BookCard";
 
 const moods = [
@@ -11,32 +13,30 @@ const moods = [
 ];
 
 export default function CategoryFilter({ data, loading, selectedCategory }) {
-  const [selectedCategories, setSelectedCategories] = useState([]); // Selected categories for filtering
-  const [filteredBooks, setFilteredBooks] = useState(data); // Books after applying filter
+  const [selectedCategories, setSelectedCategories] = useState([]);
+  const [filteredBooks, setFilteredBooks] = useState(data);
+  const [showMobileFilter, setShowMobileFilter] = useState(false);
 
-  // Extract categories from books
   const allCategories = data.reduce((acc, book) => {
     if (book.category) {
       book.category.forEach((category) => {
         if (!acc.some((cat) => cat._id === category._id)) {
-          acc.push(category); // Avoid duplicates
+          acc.push(category);
         }
       });
     }
     return acc;
   }, []);
 
-  // Set the selected category from the URL prop
   useEffect(() => {
     if (selectedCategory) {
-      setSelectedCategories([selectedCategory]); // Pre-select category from the URL
+      setSelectedCategories([selectedCategory]);
     }
   }, [selectedCategory]);
 
-  // UseEffect to filter books whenever selected categories change
   useEffect(() => {
     if (selectedCategories.length === 0) {
-      setFilteredBooks(data); // If no categories selected, show all books
+      setFilteredBooks(data);
     } else {
       setFilteredBooks(
         data.filter((book) =>
@@ -48,7 +48,6 @@ export default function CategoryFilter({ data, loading, selectedCategory }) {
     }
   }, [selectedCategories, data]);
 
-  // Handle category checkbox change
   const handleCategoryChange = (categoryId) => {
     setSelectedCategories((prevSelected) =>
       prevSelected.includes(categoryId)
@@ -57,71 +56,89 @@ export default function CategoryFilter({ data, loading, selectedCategory }) {
     );
   };
 
+  const FilterPanel = () => (
+    <>
+      <h3 className="text-lg font-medium text-gray-800 mb-2">Categories</h3>
+      <ul className="space-y-2 mb-4">
+        {allCategories.map((category) => (
+          <li key={category._id}>
+            <label className="flex items-center space-x-2">
+              <input
+                type="checkbox"
+                value={category._id}
+                checked={selectedCategories.includes(category._id)}
+                onChange={() => handleCategoryChange(category._id)}
+                className="form-checkbox h-5 w-5 text-blue-500"
+              />
+              <span className="text-gray-700 capitalize">
+                {category.categoryName}
+              </span>
+            </label>
+          </li>
+        ))}
+      </ul>
+      <Separator className="my-4 bg-gray-300" />
+      <h3 className="text-lg font-medium text-gray-800 mb-2">Mood</h3>
+      <ul className="space-y-2">
+        {moods.map((mood) => (
+          <li key={mood.id}>
+            <label className="flex items-center space-x-2">
+              <input
+                type="checkbox"
+                value={mood.value}
+                className="form-checkbox h-5 w-5 text-blue-700"
+              />
+              <span className="text-gray-700 capitalize">{mood.value}</span>
+            </label>
+          </li>
+        ))}
+      </ul>
+    </>
+  );
+
   return (
-    <div className="flex px-[5%]">
-      <div className="w-64 flex-shrink-0 bg-gray-100 p-4 mt-5">
+    <div className="flex flex-col sm:flex-row px-[5%]">
+      {/* Desktop Sidebar Filter */}
+      <div className="hidden sm:block sm:w-64 flex-shrink-0 bg-gray-100 p-4 mt-5 rounded-lg shadow-sm">
         <h2 className="text-xl font-semibold text-gray-700 mb-4">Filter</h2>
         <Separator className="my-3 bg-gray-300" />
-
-        <div className="mb-4">
-          <h3 className="text-lg font-medium text-gray-800 mb-2">Categories</h3>
-          <ul className="space-y-2">
-            {allCategories.length > 0 &&
-              allCategories.map((category) => (
-                <li key={category._id}>
-                  <label className="flex items-center space-x-2">
-                    <input
-                      type="checkbox"
-                      value={category._id}
-                      checked={selectedCategories.includes(category._id)} // Bind to selected categories
-                      onChange={() => handleCategoryChange(category._id)} // Handle change
-                      className="form-checkbox h-5 w-5 text-blue-500"
-                    />
-                    <span className="text-gray-700 capitalize">
-                      {category.categoryName}
-                    </span>
-                  </label>
-                </li>
-              ))}
-          </ul>
-          <Separator className="mt-5 bg-gray-300" />
-          <div className="mb-3">
-            <h3 className="text-lg font-medium text-gray-800 mb-2">Mood</h3>
-            <ul className="space-y-2">
-              {moods.map((mood) => (
-                <li key={mood.id}>
-                  <label className="flex items-center space-x-2">
-                    <input
-                      type="checkbox"
-                      value={mood.value}
-                      className="form-checkbox h-5 w-5 text-blue-700"
-                    />
-                    <span className="text-gray-700 capitalize">
-                      {mood.value}
-                    </span>
-                  </label>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
+        <FilterPanel />
       </div>
 
-      {/* Display books */}
+      {/* Mobile Filter Toggle */}
+      <div className="sm:hidden flex justify-end ">
+        <Button
+          variant="transparent"
+          onClick={() => setShowMobileFilter(!showMobileFilter)}
+          className="flex items-center gap-2"
+        >
+          <Filter className="h-4 w-4" />
+          Filters
+        </Button>
+      </div>
+
+      {/* Mobile Filter Dropdown */}
+      {showMobileFilter && (
+        <div className="sm:hidden bg-gray-100 rounded-lg shadow-md p-4 mb-4">
+          <FilterPanel />
+        </div>
+      )}
+
+      {/* Books Display */}
       <div className="w-full flex-grow">
-        <main className="px-6">
-          <ScrollArea className="space-y-6">
+        <main className="sm:px-6 px-0">
+          <ScrollArea className="sm:space-y-6 space-y-2">
             {loading ? (
-              <div className="grid grid-cols-2 gap-6 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-4 w-full">
+              <div className="grid grid-cols-2 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4">
                 {Array.from({ length: 8 }).map((_, index) => (
                   <div
                     key={index}
                     className="h-64 w-full bg-gray-200 animate-pulse rounded-lg"
-                  ></div>
+                  />
                 ))}
               </div>
             ) : (
-              <div className="grid grid-cols-2 gap-6 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-4 w-full">
+              <div className="grid grid-cols-2 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4">
                 {filteredBooks.length > 0 ? (
                   filteredBooks.map((book) => (
                     <BookCard key={book._id} book={book} />

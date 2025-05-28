@@ -59,7 +59,7 @@ export default function CategoryPage() {
 
   return (
     <div className="bg-[#e5d4b8] pt-16">
-      <h1 className="ml-[5%] text-3xl text-amber-900 font-semibold mt-6 text-center">
+      <h1 className="ml-[5%] sm:text-5xl text-2xl text-amber-900 font-semibold mt-6 text-center">
         Browse
       </h1>
       <div className="flex flex-row">
