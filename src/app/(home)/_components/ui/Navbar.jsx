@@ -62,7 +62,10 @@ function MobileNav() {
   return (
     <div className="lg:hidden fixed w-full z-50">
       <div className="h-[50px] bg-[#f5dac7] w-full flex justify-between items-center px-[10px]">
-        <img src="/photos/logoBird.png" alt="Logo" className="h-12"  />
+         <Link href="/">
+          <img src="/photos/logo.png" alt="Logo" className="h-12" />
+        </Link>
+        {/* <img src="/photos/logoBird.png" alt="Logo" className="h-12"  /> */}
 
         <Menu className="size-8 cursor-pointer" onClick={toggleMenu} />
       </div>
