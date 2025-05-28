@@ -1,7 +1,7 @@
 import Link from "next/link";
 export default function ExploreMore() {
     return (
-      <div className="text-center p-6">
+      <div className="text-center px-6 pb-6">
         <p className="text-lg font-semibold text-[#8F3623] font-serif">
           Want to explore more amazing books? Click the button below and dive into our collection!
         </p>

@@ -43,14 +43,14 @@ export default function Secondmain() {
   };
 
   return (
-    <div className="p-6 flex flex-col items-center mt-8" data-aos="zoom-in-up">
-      <h1 className="text-5xl font-serif font-bold text-[#6d433d] mb-6">
+    <div className="px-3 sm:px-6 py-6 flex flex-col items-center mt-8" data-aos="zoom-in-up">
+      <h1 className="text-2xl sm:text-5xl font-serif font-bold text-[#6d433d] mb-6">
         Book Collections
       </h1>
-      <p className="font-serif text-2xl text-gray-500 text-center">
+      <p className="font-serif  text-lg sm:text-2xl text-gray-500 text-center">
         Explore our handpicked selections ranging from timeless literature to
       </p>
-      <p className="font-serif text-2xl text-gray-500 text-center">
+      <p className="font-serif text-lg sm:text-2xl text-gray-500 text-center">
         contemporary bestsellers across various genres.
       </p>
 
@@ -70,7 +70,7 @@ export default function Secondmain() {
           </button>
         ))}
       </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-20 mt-6 p-4">
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-5 sm:gap-20 mt-6  p-4">
         {filteredBooks.map((book) => (
           <div
             key={book._id}
@@ -83,7 +83,7 @@ export default function Secondmain() {
               alt={book.bookName}
               className="w-40 h-60 object-cover rounded-t-lg"
             />
-            <div className="p-4 text-center">
+            <div className="p-2 sm:p-4 text-center">
               <h3 className="text-lg font-medium mb-2">{book.bookName}</h3>
               <p className="text-gray-500 text-sm mb-1">
                 {/* Check if author is an object or a string */}
