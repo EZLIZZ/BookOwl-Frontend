@@ -7,9 +7,9 @@ export default function Footer1() {
       {/* Main Footer Section */}
       <div className="w-full px-4 sm:px-[5%] grid sm:grid-cols-3 grid-cols-1 m-auto gap-8 bg-[#E6D4B9] z-40 border-2 border-[#265073] py-5">
         {/* Logo and Description */}
-        <div className="flex flex-col items-center sm:items-start">
+        <div className="flex flex-col items-start">
           <img src="/photos/logo.png" alt="Book Owl Logo" className="w-32 sm:w-40" />
-          <p className="text-[#265073] font-serif text-sm sm:text-lg text-center sm:text-left mt-4">
+          <p className="text-[#265073] font-serif text-sm sm:text-lg text-left mt-4">
             BookOwl: Guiding You to Your Next Great Adventure, One Page at a Time!
           </p>
         </div>
