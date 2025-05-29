@@ -62,7 +62,7 @@ export default function AddReview({ bookData }) {
 
   return (
     <div
-      className=" shadow-lg rounded-lg bg-gray-50 max-w-5xl mx-auto mt-8"
+      className=" shadow-lg rounded-lg bg-gray-50 max-w-5xl mx-auto mt-3 sm:mt-8"
       data-aos="fade-out"
     >
       {error && (
@@ -75,7 +75,7 @@ export default function AddReview({ bookData }) {
           onSubmit={form.handleSubmit(onSubmit)}
           className="p-6 rounded-xl shadow-sm mb-6 space-y-3"
         >
-          <h3 className="text-2xl font-semibold mb-4 text-[#c2918b]">
+          <h3 className="text-xl sm:text-2xl font-semibold mb-2 sm:mb-4 text-[#c2918b]">
             Write a Review
           </h3>
 

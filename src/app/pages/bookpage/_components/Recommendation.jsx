@@ -13,47 +13,45 @@ import { useRouter } from "next/navigation";
 
 export default function Recommendation({ data }) {
   const router = useRouter();
+
   const handleBookClick = (bookId) => {
     router.push(`/pages/bookpage/${bookId}`);
   };
+
   useEffect(() => {
-    AOS.init(); // Initialize AOS for scroll animations
+    AOS.init();
   }, []);
 
   return (
-    <div className="bg-white py-8 px-4  rounded-lg shadow-md border mx-[5%] -mt-3">
+    <div className="bg-white py-4 sm:py-8 px-4 rounded-lg shadow-md border mx-[5%] mb-10 ">
       <Swiper
-        slidesPerView={4}
+        slidesPerView={2}
         spaceBetween={20}
         navigation={true}
         modules={[Navigation]}
         className="mySwiper"
         breakpoints={{
-          640: { slidesPerView: 1 },
-          768: { slidesPerView: 2 },
+          320: { slidesPerView: 2 }, // 2 per view on small screens (phones)
+          640: { slidesPerView: 2 },
+          768: { slidesPerView: 3 },
           1024: { slidesPerView: 4 },
         }}
       >
         {data.map((book) => (
           <SwiperSlide key={book.book_id}>
-            {/* Book Card with AOS Animation */}
             <div
               data-aos="fade-up"
               data-aos-duration="1000"
-              className="flex flex-col items-center -mt-5 p-4 space-y-4 bg-gray-50 rounded-lg shadow-md transition-transform transform hover:scale-105"
+              className="flex flex-col items-center p-2 sm:p-4 space-y-4 bg-gray-50 rounded-lg shadow-md transition-transform transform hover:scale-105"
             >
-              {/* Book Image */}
               <img
                 src={book.coverImage}
                 alt={book.bookName}
-                className="  w-48 h-72 object-cover rounded-lg"
+                className="w-36 h-56 sm:w-44 sm:h-64 md:w-48 md:h-72 object-cover rounded-lg cursor-pointer"
                 onClick={() => handleBookClick(book.book_id)}
               />
-              {/* Book Info */}
               <div className="text-center">
-                {/* <p className="text-gray-600 text-sm">By {book.author}</p> */}
-                <h3 className="text-lg font-bold">{book.bookName}</h3>
-                {/* <p className="text-gray-800 text-sm">{book.price}</p> */}
+                <h3 className="text-base sm:text-lg font-bold">{book.bookName}</h3>
               </div>
             </div>
           </SwiperSlide>

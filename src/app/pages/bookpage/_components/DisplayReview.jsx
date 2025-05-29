@@ -60,7 +60,7 @@ export default function DisplayReview({ data }) {
               </div>
               <div>
                 <div className="flex items-center justify-between">
-                  <h5 className="text-lg font-medium text-gray-800">
+                  <h5 className="text-md sm:text-lg font-medium text-gray-800">
                     {review.user ? review.user.name : "Anonymous User"}
                   </h5>
                   <span className="text-sm text-gray-500">{review.createdAt}</span>
