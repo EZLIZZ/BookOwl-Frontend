@@ -15,7 +15,7 @@ const UserSidebar = () => {
   ];
 
   return (
-    <div className="w-64 bg-[#bd9d86] pt-[80px] ">
+    <div className="hidden sm:block w-64 bg-[#bd9d86] pt-[80px] ">
       {/* Profile Icon */}
       <div className="flex justify-center mb-1">
         <UserCircle size={50} className="text-[#8B3623]" />

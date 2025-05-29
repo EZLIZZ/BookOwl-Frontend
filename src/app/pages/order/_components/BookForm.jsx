@@ -76,14 +76,14 @@ export default function BookForm() {
   return (
     <div className="min-h-screen bg-[#E6D4B9] flex items-center justify-center">
       <div className="container max-w-5xl bg-white shadow rounded p-8">
-        <h1 className="text-4xl font-bold font-serif text-[#8B3623] mb-4">
+        <h1 className="text-xl sm:text-4xl font-bold font-serif text-[#8B3623] mb-2 sm:mb-4">
           Book Order Form
         </h1>
 
         <form onSubmit={handleSubmit(onSubmit)}>
-          <div className="space-y-8">
+          <div className="space-y- sm:space-y-8">
             <div className="space-y-2">
-              <Label className="text-[#AF886B] text-lg"> Name</Label>
+              <Label className="text-[#AF886B] text-md sm:text-lg"> Name</Label>
               <Input
                 type="text"
                 {...register("name")}
@@ -93,7 +93,7 @@ export default function BookForm() {
             </div>
 
             <div className="space-y-2">
-              <Label className="text-[#AF886B] text-lg">Phone Number</Label>
+              <Label className="text-[#AF886B] text-md sm:text-lg">Phone Number</Label>
               <Input
                 type="tel"
                 {...register("phone")}
@@ -103,7 +103,7 @@ export default function BookForm() {
             </div>
 
             <div className="space-y-2">
-              <Label className="text-[#AF886B] text-lg">Shipping Address</Label>
+              <Label className="text-[#AF886B] text-md sm:text-lg">Shipping Address</Label>
               <div className="grid grid-cols-3 gap-4">
                 <Input
                   type="text"
@@ -124,7 +124,7 @@ export default function BookForm() {
             </div>
 
             <div className="space-y-4">
-              <Label className="text-[#AF886B] text-lg">Payment Method</Label>
+              <Label className="text-[#AF886B] text-md sm:text-lg">Payment Method</Label>
               <div className="flex space-x-6">
                 <div
                   className={`cursor-pointer border p-2 rounded-lg ${

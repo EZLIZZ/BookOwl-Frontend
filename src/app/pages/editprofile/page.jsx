@@ -131,17 +131,17 @@ useEffect(() => {
       {/* Main Content */}
       <div className="flex flex-grow overflow-hidden ">
         {/* Profile Section */}
-        <div className="flex-grow overflow-y-auto bg-[#E6D4B9] p-8 pt-[75px]">
+        <div className="flex-grow overflow-y-auto bg-[#E6D4B9] p-8 mt-[80px]">
           <div className="max-w-4xl mx-auto bg-white shadow rounded-lg p-10">
-            <h1 className="text-4xl font-bold font-serif text-[#8B3623] mb-6">
+            <h1 className="text-2xl sm:text-4xl font-bold font-serif text-[#8B3623] mb-6">
               Edit My Profile
             </h1>
 
-            <div className="space-y-8">
+            <div className="space-y-4 sm:space-y-8">
               {/* Profile Picture Section */}
-              <div className="flex items-center gap-6">
+              <div className="flex items-center gap-3 sm:gap-6">
                 <div className="relative">
-                  <div className="w-32 h-32 rounded-full bg-[#BD9D86] flex items-center justify-center text-white text-6xl font-light">
+                  <div className="w-20 sm:w-32 aspect-square rounded-full bg-[#BD9D86] flex items-center justify-center text-white text-3xl sm:text-6xl font-light">
                     {form.getValues("name")[0]?.toUpperCase()}
                   </div>
                   <div
@@ -165,7 +165,7 @@ useEffect(() => {
               <Form {...form}>
                 <form
                   onSubmit={form.handleSubmit(onSubmit)}
-                  className="space-y-6"
+                  className="space-y-3 sm:space-y-6"
                 >
                   {/* Name Field */}
                   <FormField

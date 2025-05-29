@@ -3,11 +3,11 @@
 export default function TopAbout() {
   return (
     <div className="bg-[#e3ceaf] pt-[70px] rounded-lg w-full mb-10 shadow-lg">
-      <div className="ml-8  p-8">
+      <div className="ml-4 sm:ml-8  p-4 sm:p-8">
         <div className="grid grid-cols-1 md:grid-cols-2 items-center gap-10">
           {/* Text Section */}
           <div data-aos="fade-right">
-            <h1 className="text-4xl text-[#265073] font-serif font-bold mb-6">
+            <h1 className="text-2xl sm:text-4xl text-[#265073] font-serif font-bold mb-3 sm:mb-6">
               About Us
             </h1>
             <p className="font-serif text-[#94603a] text-lg leading-relaxed">

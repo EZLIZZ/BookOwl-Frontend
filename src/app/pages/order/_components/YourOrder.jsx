@@ -52,7 +52,7 @@ export default function YourOrder() {
           {data.map((item) => (
             <div className="flex flex-col" key={item._id}>
               <div className="flex justify-between items-center">
-                <div className="flex items-center w-[70%]">
+                <div className="flex items-center w-[50%] sm:w-[70%]">
                   <img
                     src={
                       item.bookId.coverImage
@@ -69,7 +69,7 @@ export default function YourOrder() {
                 </div>
                 
                 {/* Displaying Item Total (Quantity * Price) */}
-                <p className="pl-10 text-right text-themePrimary text-lg font-semibold">
+                <p className="pl-5 sm:pl-10 text-right text-themePrimary text-md sm:text-lg font-semibold">
                    {item.quantity} x Rs {item.price} = Rs{" "}
                   {item.quantity * item.price}
                 </p>

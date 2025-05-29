@@ -91,8 +91,8 @@ function MobileWhyUs() {
           <h1 className="text-slate-900 font-bold text-4xl mb-2">Why</h1>
           <h2 className="text-gray-700 text-3xl mb-5">Choose Us?</h2>
           <p className="">
-            National Biomed bla bla bla good bla bla bla bla bla bla bla good
-            bla bla bla bla bla bla bla good bla bla bla bla
+            To become the go-to destination for book lovers everywhere—a platform that redefines how readers explore, review, and share books. We envision a future where Book Owl sparks curiosity, fosters creativity, and becomes synonymous with the ultimate reading experience.
+
           </p>
         </div>
       </div>

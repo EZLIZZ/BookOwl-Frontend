@@ -40,15 +40,15 @@ export default function ProfilePage() {
   }
 
   return (
-    <div className="min-h-screen p-8 pt-[80px] bg-[#E6D4B9] ">
-      <div className="container max-w-5xl bg-white shadow-lg rounded-xl p-12">
+    <div className="min-h-screen p-2  sm:p-8 mt-[75px] bg-[#E6D4B9] ">
+      <div className="container max-w-5xl bg-white shadow-lg rounded-xl p-5 sm:p-12">
         <div className="flex items-center gap-6">
-          <div className="w-32 h-32 rounded-full bg-[#bd9d86] flex items-center justify-center text-white text-5xl font-bold uppercase">
+          <div className="w-20 sm:w-32 aspect-square rounded-full bg-[#bd9d86] flex items-center justify-center text-white text-2xl sm:text-5xl font-bold uppercase">
             {profile.name[0]}
           </div>
 
           <div className="flex flex-col">
-            <h1 className="text-4xl font-bold text-[#8b3623]">{profile.name}</h1>
+            <h1 className="text-2xl sm:text-4xl font-bold text-[#8b3623]">{profile.name}</h1>
             <p className="text-xl text-[#5d768a]">{profile.username}</p>
           </div>
 
@@ -65,8 +65,8 @@ export default function ProfilePage() {
           </div>
         </div>
 
-        <div className="mt-8">
-          <p className="text-lg text-[#5d768a] mt-4 leading-relaxed">{profile.bio || ""}</p>
+        <div className="mt-2 sm:mt-8">
+          <p className="text-lg text-[#5d768a] mt-0 sm:mt-4 leading-relaxed">{profile.bio || ""}</p>
         </div>
       </div>
     </div>
