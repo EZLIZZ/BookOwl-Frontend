@@ -42,7 +42,7 @@ export default function ProfilePage() {
   return (
     <div className="min-h-screen p-2  sm:p-8 mt-[75px] bg-[#E6D4B9] ">
       <div className="container max-w-5xl bg-white shadow-lg rounded-xl p-5 sm:p-12">
-        <div className="flex items-center gap-6">
+        <div className="flex items-center gap-3  sm:gap-6">
           <div className="w-20 sm:w-32 aspect-square rounded-full bg-[#bd9d86] flex items-center justify-center text-white text-2xl sm:text-5xl font-bold uppercase">
             {profile.name[0]}
           </div>
