@@ -21,7 +21,7 @@ import {
 } from "@/components/ui/input-otp";
 import { useState, useEffect } from "react";
 import $axios from "@/lib/axios.instance";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 
 const FormSchema = z.object({
   pin: z
@@ -61,6 +61,7 @@ export default function OTP() {
   }, [otpSent, timer]);
 
 const onSubmit = async (data) => {
+  setLoading(true);
   const email = localStorage.getItem("email");
   const purpose = "emailVerification";
 
@@ -92,6 +93,8 @@ const onSubmit = async (data) => {
       error?.response?.data?.message || "Failed to verify OTP. Please try again.";
     toast.error(errorMessage);
     // console.error("OTP verification failed:", errorMessage);
+  } finally{
+    setLoading(false);
   }
 };
 

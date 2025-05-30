@@ -15,6 +15,7 @@ import {
 import { Button } from "@/components/ui/button"; // Adjust import path based on your setup
 import $axios from "@/lib/axios.instance";
 import { useState } from "react";
+import { toast } from "react-toastify";
 
 // Define the Zod schema
 const reviewSchema = z.object({
@@ -53,10 +54,12 @@ export default function AddReview({ bookData }) {
       );
       console.log("Response:", response.data);
       form.reset(); // Reset the form after successful submission
+      // toast.success("Thankyou for the review");
       window.location.reload();
     } catch (error) {
+      toast.error(error.message)
       setError("There was an issue submitting your review. Please try again.");
-      console.error("Error submitting review:", error);
+      // console.error("Error submitting review:", error);
     }
   };
 
