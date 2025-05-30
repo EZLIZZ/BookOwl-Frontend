@@ -67,6 +67,7 @@ export default function CartPage() {
       await $axios.put(`/cart/removeFromCart/${userId}`, { bookId });
       getData();
     } catch (error) {
+      toast.error(error.message)
       // console.error("Error removing book from cart:", error);
     }
   };
@@ -79,6 +80,7 @@ export default function CartPage() {
       setData([]);
       setTotalPrice(0);
     } catch (error) {
+      toast.error(error.message)
       // console.error("Error deleting all items:", error);
     }
   };

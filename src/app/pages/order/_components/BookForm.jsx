@@ -29,7 +29,7 @@ export default function BookForm() {
   const [orderSuccess, setOrderSuccess] = useState(false);
   const [orderFailure, setOrderFailure] = useState(false);
   const [loading, setLoading] = useState(false);
-    const {
+  const {
     register,
     handleSubmit,
     setValue,
@@ -48,7 +48,7 @@ export default function BookForm() {
   const paymentMethod = watch("paymentMethod");
 
   const onSubmit = async (data) => {
-    setLoading(true)
+    setLoading(true);
     try {
       const email = localStorage.getItem("email");
       const userId = localStorage.getItem("id");
@@ -94,7 +94,9 @@ export default function BookForm() {
             </div>
 
             <div className="space-y-2">
-              <Label className="text-[#AF886B] text-md sm:text-lg">Phone Number</Label>
+              <Label className="text-[#AF886B] text-md sm:text-lg">
+                Phone Number
+              </Label>
               <Input
                 type="tel"
                 {...register("phone")}
@@ -104,7 +106,9 @@ export default function BookForm() {
             </div>
 
             <div className="space-y-2">
-              <Label className="text-[#AF886B] text-md sm:text-lg">Shipping Address</Label>
+              <Label className="text-[#AF886B] text-md sm:text-lg">
+                Shipping Address
+              </Label>
               <div className="grid grid-cols-3 gap-4">
                 <Input
                   type="text"
@@ -125,7 +129,9 @@ export default function BookForm() {
             </div>
 
             <div className="space-y-4">
-              <Label className="text-[#AF886B] text-md sm:text-lg">Payment Method</Label>
+              <Label className="text-[#AF886B] text-md sm:text-lg">
+                Payment Method
+              </Label>
               <div className="flex space-x-6">
                 <div
                   className={`cursor-pointer border p-2 rounded-lg ${
@@ -171,9 +177,15 @@ export default function BookForm() {
             </div>
 
             <div className="flex justify-between pt-8">
-              <Button type="submit" className="bg-[#8b3623] text-white">
-                Submit
+              <Button
+                type="submit"
+                disabled={loading}
+                className={`bg-[#8b3623] text-white px-4 py-2 rounded-md transition 
+    ${loading ? "opacity-50 cursor-not-allowed" : "hover:bg-[#a3432b]"}`}
+              >
+                {loading ? "Submitting..." : "Submit"}
               </Button>
+
               <Button
                 variant="outline"
                 className="text-red-600 border-red-600 hover:bg-red-100"
