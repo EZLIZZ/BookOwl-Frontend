@@ -7,6 +7,7 @@ import { X, ShoppingCart } from "lucide-react";
 import $axios from "@/lib/axios.instance";
 import Link from "next/link";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { toast } from "react-toastify";
 
 export default function CartPage() {
   const [data, setData] = useState([]);
@@ -26,8 +27,10 @@ export default function CartPage() {
       localStorage.setItem("Book_cart", JSON.stringify(book_cart));
       setTotalPrice(response?.data.data.totalPrice);
     } catch (error) {
-      console.error("Error fetching cart details:", error);
+       toast.error(error.message);
+      // console.error("Error fetching cart details:", error);
     } finally {
+     
       setLoading(false);
     }
   };
@@ -41,7 +44,7 @@ export default function CartPage() {
       });
       getData();
     } catch (error) {
-      console.error("Error increasing quantity:", error);
+      toast.error("Error increasing quantity:", error);
     }
   };
 
@@ -54,7 +57,7 @@ export default function CartPage() {
       });
       getData();
     } catch (error) {
-      console.error("Error decreasing quantity:", error);
+      toast.error("Error decreasing quantity:", error);
     }
   };
 
@@ -64,7 +67,7 @@ export default function CartPage() {
       await $axios.put(`/cart/removeFromCart/${userId}`, { bookId });
       getData();
     } catch (error) {
-      console.error("Error removing book from cart:", error);
+      // console.error("Error removing book from cart:", error);
     }
   };
 
@@ -76,7 +79,7 @@ export default function CartPage() {
       setData([]);
       setTotalPrice(0);
     } catch (error) {
-      console.error("Error deleting all items:", error);
+      // console.error("Error deleting all items:", error);
     }
   };
 

@@ -28,9 +28,8 @@ export default function BookForm() {
   const router = useRouter();
   const [orderSuccess, setOrderSuccess] = useState(false);
   const [orderFailure, setOrderFailure] = useState(false);
-  // const [orderId, setOrderId] = useState(null);
-
-  const {
+  const [loading, setLoading] = useState(false);
+    const {
     register,
     handleSubmit,
     setValue,
@@ -49,6 +48,7 @@ export default function BookForm() {
   const paymentMethod = watch("paymentMethod");
 
   const onSubmit = async (data) => {
+    setLoading(true)
     try {
       const email = localStorage.getItem("email");
       const userId = localStorage.getItem("id");
@@ -57,15 +57,16 @@ export default function BookForm() {
       const response = await $axios.post(`/order/createOrder/${userId}`, order);
       if (response?.status === 200) {
         setOrderId(response.data.message);
-        console.log("OrderId", response.data.message);
+        // console.log("OrderId", response.data.message);
       } else {
         throw new Error(
           `Failed to fetch book data. Status: ${response.status}`
         );
       }
-      console.log("Response Data", response);
-      console.log("Order Submitted", data);
+      // console.log("Response Data", response);
+      // console.log("Order Submitted", data);
       // setOrderId(response.data.orderId);
+      setLoading(false);
       setOrderSuccess(true);
     } catch (error) {
       console.error("Error occurred:", error);

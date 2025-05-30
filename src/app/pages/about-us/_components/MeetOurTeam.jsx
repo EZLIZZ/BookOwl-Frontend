@@ -10,7 +10,7 @@ const teamMembers = [
   },
   {
     name: "Alisha Shrestha",
-    role: "AI",
+    role: "AI/Frontend",
     image: "/photos/alisha.jpg", // Replace with actual image path
   },
   {
