@@ -5,7 +5,7 @@ export default function Footer1() {
   return (
     <div>
       {/* Main Footer Section */}
-      <div className="w-full px-4 sm:px-[5%] grid sm:grid-cols-3 grid-cols-1 m-auto gap-8 bg-[#E6D4B9] z-40 border-2 border-[#265073] py-5">
+      <div className="w-full px-4 sm:px-[5%] grid sm:grid-cols-3 grid-cols-1 m-auto gap-8 bg-[#E6D4B9] z-40 border-2 border-[#265073] py-5 bottom-0">
         {/* Logo and Description */}
         <div className="flex flex-col items-start">
           <img src="/photos/logo.png" alt="Book Owl Logo" className="w-32 sm:w-40" />

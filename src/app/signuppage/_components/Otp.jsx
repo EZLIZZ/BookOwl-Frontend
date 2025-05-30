@@ -4,7 +4,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { useRouter } from "next/navigation";
-import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -22,6 +21,7 @@ import {
 } from "@/components/ui/input-otp";
 import { useState, useEffect } from "react";
 import $axios from "@/lib/axios.instance";
+import { toast, ToastContainer } from "react-toastify";
 
 const FormSchema = z.object({
   pin: z
@@ -43,6 +43,7 @@ export default function OTP() {
   const [timer, setTimer] = useState(300);
   const [intervalId, setIntervalId] = useState(null);
   const [showModal, setShowModal] = useState(true); // State to control modal visibility
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     if (otpSent && timer > 0) {
@@ -59,30 +60,41 @@ export default function OTP() {
     }
   }, [otpSent, timer]);
 
-  const onSubmit = async (data) => {
-    const email = localStorage.getItem("email");
-    const purpose = "emailVerification";
-    try {
-      const response = await $axios.post("/auth/verifyOtp", {
-        email,
-        otp: data.pin,
-        purpose,
-      });
-      console.log(response);
-    } catch (error) {
-      console.error(error);
+const onSubmit = async (data) => {
+  const email = localStorage.getItem("email");
+  const purpose = "emailVerification";
+
+  if (!data.pin) {
+    toast.error("Please enter the OTP before submitting.");
+    return;
+  }
+
+  try {
+    const response = await $axios.post("/auth/verifyOtp", {
+      email,
+      otp: data.pin,
+      purpose,
+    });
+
+    if (response?.data?.message) {
+      toast.success(response.data.message);
+    } else {
+      toast.success("OTP verified successfully! Redirecting to login...");
     }
 
-    if (!data.pin) {
-      toast.error(" Please enter the OTP before submitting.");
-      return;
-    }
-    toast.success("OTP verified successfully! Redirecting to login...");
     setTimeout(() => {
       router.push("/login");
       setShowModal(false); // Close the modal on successful OTP
     }, 1500);
-  };
+
+  } catch (error) {
+    const errorMessage =
+      error?.response?.data?.message || "Failed to verify OTP. Please try again.";
+    toast.error(errorMessage);
+    // console.error("OTP verification failed:", errorMessage);
+  }
+};
+
 
   const handleResendOTP = () => {
     setOtpSent(true);
@@ -159,7 +171,7 @@ export default function OTP() {
         {/* Button Group */}
         <div className="flex justify-between">
           <Button type="submit" className="bg-[#A98D78] hover:bg-[#b89b86]">
-            Submit
+           {loading? ("loading.."):("Submit")} 
           </Button>
           <Button
             type="button"

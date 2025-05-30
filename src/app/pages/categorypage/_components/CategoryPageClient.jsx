@@ -73,7 +73,7 @@ export default function CategoryPageClient() {
 
   return (
     <div>
-      <div className="flex flex-row px-[5%]">
+      <div className="flex flex-row px-[5%] sm:mt-24 mt-0">
         <CategoryFilter selectedCategory={categoryParam} data={data} loading={loading} />
       </div>
 

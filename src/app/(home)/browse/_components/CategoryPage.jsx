@@ -28,6 +28,13 @@ export default function CategoryPage() {
     getData(currentPage, categoryParam);
   }, [currentPage, categoryParam]);
 
+  function Spinner() {
+    return (
+      <div className="w-full flex justify-center items-center py-10">
+        <div className="h-10 w-10 border-4 border-t-transparent border-[#6d433d] rounded-full animate-spin" />
+      </div>
+    );
+  }
   const getData = async (page, category) => {
     try {
       setLoading(true);
@@ -63,11 +70,15 @@ export default function CategoryPage() {
         Browse
       </h1>
       <div className="flex flex-row">
-        <CategoryFilter
-          selectedCategory={categoryParam}
-          data={data}
-          loading={loading}
-        />
+        {loading ? (
+          <Spinner />
+        ) : (
+          <CategoryFilter
+            selectedCategory={categoryParam}
+            data={data}
+            loading={loading}
+          />
+        )}
       </div>
 
       <Pagination className="mt-4">
@@ -90,9 +101,7 @@ export default function CategoryPage() {
                   e.preventDefault();
                   handlePageChange(page);
                 }}
-                className={
-                  currentPage === page ? "font-bold text-primary" : ""
-                }
+                className={currentPage === page ? "font-bold text-primary" : ""}
               >
                 {page}
               </PaginationLink>

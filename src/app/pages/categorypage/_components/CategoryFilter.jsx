@@ -200,6 +200,9 @@ export default function CategoryFilter({ data, loading, selectedCategory }) {
   const FilterPanel = () => (
     <>
       <h3 className="text-lg font-medium text-gray-800 mb-2">Categories</h3>
+      {loading ? (
+        <p className="w-6 h-6 border-4 border-gray-600 border-t-transparent rounded-full animate-spin"></p>
+      ):(
       <ul className="space-y-2 mb-4">
         {allCategories.map((category) => (
           <li key={category._id}>
@@ -218,6 +221,7 @@ export default function CategoryFilter({ data, loading, selectedCategory }) {
           </li>
         ))}
       </ul>
+      )}
       <Separator className="my-4 bg-gray-300" />
       <h3 className="text-lg font-medium text-gray-800 mb-2">Mood</h3>
       <ul className="space-y-2">
@@ -270,14 +274,15 @@ export default function CategoryFilter({ data, loading, selectedCategory }) {
         <main className="sm:px-6 px-0">
           <ScrollArea className="sm:space-y-6 space-y-2">
             {loading ? (
-              <div className="grid grid-cols-2  md:grid-cols-3 lg:grid-cols-4 gap-4">
-                {Array.from({ length: 8 }).map((_, index) => (
-                  <div
-                    key={index}
-                    className="h-64 w-full bg-gray-200 animate-pulse rounded-lg"
-                  />
-                ))}
-              </div>
+              // <div className="grid grid-cols-2  md:grid-cols-3 lg:grid-cols-4 gap-4">
+              //   {Array.from({ length: 8 }).map((_, index) => (
+              //     <div
+              //       key={index}
+              //       className="h-64 w-full bg-gray-200 animate-pulse rounded-lg"
+              //     />
+              <p>Loading...</p>
+                // ))}
+              // </div>
             ) : (
               <div className="grid grid-cols-2 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4">
                 {filteredBooks.length > 0 ? (
@@ -285,7 +290,7 @@ export default function CategoryFilter({ data, loading, selectedCategory }) {
                     <BookCard key={book._id} book={book} />
                   ))
                 ) : (
-                  <p>No books found with the selected filters.</p>
+                  <p>Loading...</p>
                 )}
               </div>
             )}

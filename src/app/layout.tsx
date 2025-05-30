@@ -3,6 +3,8 @@ import "./globals.css";
 import "aos/dist/aos.css";
 
 import { AOSProvider } from "@/lib/utils/AOSProvider";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export const metadata: Metadata = {
   title: "BookOwl",
@@ -16,10 +18,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <AOSProvider />
+     
       <body
         className=""
       >
+         <AOSProvider />
+            <ToastContainer position="top-right" autoClose={3000} />
+        
         {children}
       </body>
     </html>

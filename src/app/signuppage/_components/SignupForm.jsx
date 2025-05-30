@@ -16,6 +16,7 @@ import {
 import { Card } from "@/components/ui/card";
 import { Mail, Eye, EyeOff, User, Lock, Phone } from "lucide-react";
 import $axios from "@/lib/axios.instance";
+import { toast } from "react-toastify";
 
 const formSchema = z.object({
   name: z.string().min(5, { message: "Name must be at least 5 characters." }),
@@ -53,10 +54,12 @@ export default function SignUpPage() {
   });
 
   async function onSubmit(values) {
+    setIsSubmitting(true);
     try {
       const response = await $axios.post("/auth/register", values);
       localStorage.setItem("email", values.email);
       if (response?.status === 200) {
+        toast.success("Registration successful! Please verify your OTP.");
         setIsOTPVisible(true);
       }
     } catch (error) {
@@ -64,6 +67,7 @@ export default function SignUpPage() {
         // Email already exists
         setIsEmailExists(true);
       } else {
+        
         setError(error.message);
         setIsSubmitting(false);
       }

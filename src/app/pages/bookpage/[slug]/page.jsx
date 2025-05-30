@@ -15,6 +15,7 @@ export default function BookPage() {
   const [data, setData] = useState(null);
   const [recom, setRecom] = useState(null);
   const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   // Fetch book details
   useEffect(() => {
@@ -24,6 +25,7 @@ export default function BookPage() {
     }
 
     async function fetchData() {
+      setLoading(true);
       try {
         console.log("Fetching book data for slug:", slug);
         const response = await $axios.get(`/book/getBookById/${slug}`);
@@ -40,6 +42,8 @@ export default function BookPage() {
       } catch (err) {
         console.error("Failed to fetch book data:", err);
         setError(err.message || "Failed to fetch book data.");
+      } finally{
+        setLoading(false);
       }
     }
 
@@ -76,22 +80,32 @@ export default function BookPage() {
     getRecom();
   }, [slug]);
 
-  if (error) {
-    return <p style={{ color: "red" }}>{error}</p>;
-  }
-
-  if (!data) {
-    return <p>Loading book details...</p>;
-  }
-
+ if (loading) {
   return (
-    <>
+    <div className="w-full h-screen flex justify-center items-center">
+      <div className="w-8 h-8 border-4 border-blue-700 border-t-transparent rounded-full animate-spin"></div>
+    </div>
+  );
+}
+
+if (error) {
+  return <p style={{ color: "red" }}>{error}</p>;
+}
+
+if (!data) {
+  return <p>No book data found.</p>;
+}
+
+return (
+  <>
+    <div>
       <Starting data={data} />
       <Author data={data} />
       <AddReview bookData={data} />
       <DisplayReview data={data} />
       <You />
       {recom && <Recommendations data={recom} />}
-    </>
-  );
+    </div>
+  </>
+);
 }
