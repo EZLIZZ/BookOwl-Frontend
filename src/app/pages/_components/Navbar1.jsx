@@ -47,7 +47,7 @@ export default function Navbar1() {
 
   const logout = async () => {
     try {
-      await $axios.post("/auth/logout", {}, { withCredentials: true });;
+      await $axios.post("/auth/logout");;
       localStorage.clear();
      router.push("/login").catch(() => {
   window.location.href = "/login";
