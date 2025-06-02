@@ -157,7 +157,7 @@ const onSubmit = async (data) => {
                 </InputOTP>
               </FormControl>
               <FormDescription className="text-sm text-[#265073] font-serif">
-                Please enter the 6-digit code sent to your phone.
+                Please enter the 6-digit code sent to your mail.
               </FormDescription>
               <FormMessage />
             </FormItem>

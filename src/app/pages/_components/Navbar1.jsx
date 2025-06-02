@@ -47,9 +47,11 @@ export default function Navbar1() {
 
   const logout = async () => {
     try {
-      await $axios.post("/auth/logout");
+      await $axios.post("/auth/logout", {}, { withCredentials: true });;
       localStorage.clear();
-      router.push("/login");
+     router.push("/login").catch(() => {
+  window.location.href = "/login";
+});
     } catch (error) {
       console.error("Logout failed:", error);
     }

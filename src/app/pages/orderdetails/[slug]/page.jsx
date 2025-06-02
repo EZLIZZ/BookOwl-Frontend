@@ -39,7 +39,7 @@ export default function Orderdetails() {
     setLoading(true);
     const return_url = encodeURIComponent("https://khalti.com/");
     const website_url = encodeURIComponent(
-      "http://localhost:3000/pages/success/"
+      "http://localhost:3000/"
     );
     const purchase_order_name = "Book Purchase";
     const purchase_order_id = slug; // Using slug as purchase_order_id
