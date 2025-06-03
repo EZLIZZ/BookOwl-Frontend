@@ -43,7 +43,7 @@ export default function LoginPage() {
     setLoading(true);
     try {
       const response = await $axios.post("/auth/login", values);
-      // console.log("response:", response);
+      console.log("response:", response);
       if (response && response.status === 200) {
         toast.success("Login successful")
         const user = response.data;
