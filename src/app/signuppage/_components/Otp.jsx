@@ -99,11 +99,27 @@ const onSubmit = async (data) => {
 };
 
 
-  const handleResendOTP = () => {
+  const handleResendOTP = async () => {
+  const email = localStorage.getItem("email");
+
+  if (!email) {
+    toast.error("Email not found. Please restart the process.");
+    return;
+  }
+
+  try {
+    const response = await $axios.post("/auth/resendOtp", { email });
+
+    toast.success(response.data?.message || "A new OTP has been sent to your email!");
     setOtpSent(true);
-    setTimer(120);
-    toast.info(" A new OTP has been sent to your mail!");
-  };
+    setTimer(120); // Restart the timer
+
+  } catch (error) {
+    const errorMessage =
+      error?.response?.data?.message || "Failed to resend OTP. Please try again.";
+    toast.error(errorMessage);
+  }
+};
 
   const formatTime = (seconds) => {
     const minutes = Math.floor(seconds / 60);

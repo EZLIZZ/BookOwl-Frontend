@@ -9,27 +9,30 @@ import { useEffect, useState } from "react";
 export default function Orderdetails() {
   const { slug } = useParams();
   const [order, setOrder] = useState(null);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
     if (slug) {
       getOrderDetails();
     }
   }, [slug]);
 
-  const getOrderDetails = async () => {
-    try {
-      const response = await $axios.get(`/order/getOrderDetailsById/${slug}`);
-      console.log(response.data.data._id);
-      console.log(response.data.data);
-      setOrder(response?.data.data);
-      // setAmount(response?.data.data.totalPrice); // Assuming response follows your ApiResponse structure
-    } catch (error) {
-      console.error(error);
-    }
-  };
+ const getOrderDetails = async () => {
+  setLoading(true); // Start loading
+  try {
+    const response = await $axios.get(`/order/getOrderDetailsById/${slug}`);
+    console.log(response.data.data._id);
+    console.log(response.data.data);
+    setOrder(response?.data.data);
+  } catch (error) {
+    console.error(error);
+  } finally {
+    setLoading(false); // Stop loading whether success or error
+  }
+};
 
-  if (!order) {
-    return <p className="text-center text-lg">Loading order details...</p>;
+
+  if (loading) {
+    return <p className="w-full h-screen flex items-center justify-center text-center text-lg">Loading order details...</p>;
   }
 
   // if (error) {

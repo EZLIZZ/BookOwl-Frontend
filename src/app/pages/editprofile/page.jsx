@@ -38,13 +38,12 @@ export default function EditProfile() {
   const router = useRouter();
   const [userId, setUserId] = useState(null);
 
-useEffect(() => {
-  if (typeof window !== "undefined") {
-    const storedId = localStorage.getItem("id");
-    setUserId(storedId);
-  }
-}, []);
-
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const storedId = localStorage.getItem("id");
+      setUserId(storedId);
+    }
+  }, []);
 
   // React Hook Form setup
   const form = useForm({
@@ -60,24 +59,23 @@ useEffect(() => {
 
   // Fetch user profile data
   useEffect(() => {
-  const getData = async () => {
-    if (!userId) return;
+    const getData = async () => {
+      if (!userId) return;
 
-    try {
-      const response = await $axios.get(`/userProfile/getUserById/${userId}`);
-      if (response && response.status === 200) {
-        setProfile(response.data.data);
+      try {
+        const response = await $axios.get(`/userProfile/getUserById/${userId}`);
+        if (response && response.status === 200) {
+          setProfile(response.data.data);
+        }
+      } catch (error) {
+        console.error("Error fetching profile:", error);
+      } finally {
+        setLoading(false);
       }
-    } catch (error) {
-      console.error("Error fetching profile:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
+    };
 
-  getData();
-}, [userId]);
-
+    getData();
+  }, [userId]);
 
   // Update form values when profile data is fetched
   useEffect(() => {
@@ -93,28 +91,49 @@ useEffect(() => {
 
   // Form submission
   const onSubmit = async (data) => {
-  if (!userId) return;
+    if (!userId) return;
 
-  try {
-    const updatedData = { ...data, image };
-    const UpdateResponse = await $axios.put(
-      `/userProfile/updateUser/${userId}`,
-      updatedData
-    );
-    console.log("Profile Updated:", UpdateResponse);
-    alert("Profile Updated Successfully!");
-    router.push("/pages/userdashboard");
-  } catch (error) {
-    console.error("Error submitting form:", error);
-  }
-};
-
+    try {
+      const updatedData = { ...data, image };
+      const UpdateResponse = await $axios.put(
+        `/userProfile/updateUser/${userId}`,
+        updatedData
+      );
+      console.log("Profile Updated:", UpdateResponse);
+      alert("Profile Updated Successfully!");
+      router.push("/pages/userdashboard");
+    } catch (error) {
+      console.error("Error submitting form:", error);
+    }
+  };
 
   // Handle file input change
-  const handleFileChange = (e) => {
+  const handleFileChange = async (e) => {
     const file = e.target.files[0];
-    if (file) {
-      setImage(file); // Set the selected image to state
+    if (!file) return;
+
+    setImage(file);
+
+    const formData = new FormData();
+    formData.append("userImage", file); // match backend field name
+
+    // get user id from localStorage (or other secure storage)
+    const userId = localStorage.getItem("id");
+
+    if (!userId) {
+      console.error("User ID not found in localStorage");
+      return;
+    }
+
+    try {
+      const res = await $axios.put(
+        `/userProfile/updateUserProfile/${userId}`,
+        formData
+      );
+
+      console.log("Profile updated successfully", res.data);
+    } catch (err) {
+      console.error("Error uploading profile picture", err);
     }
   };
 
@@ -141,9 +160,24 @@ useEffect(() => {
               {/* Profile Picture Section */}
               <div className="flex items-center gap-3 sm:gap-6">
                 <div className="relative">
-                  <div className="w-20 sm:w-32 aspect-square rounded-full bg-[#BD9D86] flex items-center justify-center text-white text-3xl sm:text-6xl font-light">
-                    {form.getValues("name")[0]?.toUpperCase()}
-                  </div>
+                  {profile.profilePicture ? (
+                    <img
+                      src={profile.profilePicture}
+                      alt="Profile"
+                      className="w-20 sm:w-32 aspect-square rounded-full object-cover"
+                    />
+                  ) : image ? (
+                    <img
+                      src={URL.createObjectURL(image)}
+                      alt="Profile Preview"
+                      className="w-20 sm:w-32 aspect-square rounded-full object-cover"
+                    />
+                  ) : (
+                    <div className="w-20 sm:w-32 aspect-square rounded-full bg-[#BD9D86] flex items-center justify-center text-white text-3xl sm:text-6xl font-light">
+                      {form.getValues("name")[0]?.toUpperCase()}
+                    </div>
+                  )}
+
                   <div
                     onClick={triggerFileUpload}
                     className="absolute -bottom-2 -right-2 w-10 h-10 bg-white rounded-full border border-gray-200 flex items-center justify-center shadow cursor-pointer"

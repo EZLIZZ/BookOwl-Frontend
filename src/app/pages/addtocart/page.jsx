@@ -19,21 +19,25 @@ export default function CartPage() {
   }, []);
 
   const getData = async () => {
-    const userId = localStorage.getItem("id");
-    try {
-      const response = await $axios.get(`/cart/getCartDetails/${userId}`);
-      const book_cart = response?.data.data.items;
-      setData(book_cart);
-      localStorage.setItem("Book_cart", JSON.stringify(book_cart));
-      setTotalPrice(response?.data.data.totalPrice);
-    } catch (error) {
-       toast.error(error.message);
-      // console.error("Error fetching cart details:", error);
-    } finally {
-     
-      setLoading(false);
+  const userId = localStorage.getItem("id");
+  try {
+    const response = await $axios.get(`/cart/getCartDetails/${userId}`);
+    const book_cart = response?.data.data.items;
+    setData(book_cart);
+    localStorage.setItem("Book_cart", JSON.stringify(book_cart));
+    setTotalPrice(response?.data.data.totalPrice);
+  } catch (error) {
+    if (error?.response?.status === 404) {
+      setData([]);
+      setTotalPrice(0);
+    } else {
+      toast.error("Something went wrong while fetching cart.");
     }
-  };
+  } finally {
+    setLoading(false);
+  }
+};
+
 
   const handleIncreaseQuantity = async (bookId) => {
     const userId = localStorage.getItem("id");

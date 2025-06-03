@@ -32,12 +32,16 @@ const navItems = [
 export default function Navbar1() {
   const router = useRouter();
   const [userInitial, setUserInitial] = useState("");
+  const [profilePicture, setProfilePicture] = useState(null);
+
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
 
   useEffect(() => {
     const userName = localStorage.getItem("name");
     if (userName) setUserInitial(userName.charAt(0).toUpperCase());
+    const storedProfilePicture = localStorage.getItem("profilePicture");
+    if (storedProfilePicture) setProfilePicture(storedProfilePicture);
 
     const handleScroll = () => setIsScrolled(window.scrollY > 50);
     window.addEventListener("scroll", handleScroll);
@@ -90,9 +94,18 @@ export default function Navbar1() {
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <button className="flex items-center space-x-1 font-medium">
-                  <div className="w-8 h-8 flex items-center justify-center bg-[#af886b] rounded-full text-white">
-                    {userInitial}
-                  </div>
+                  {profilePicture ? (
+                    <img
+                      src={profilePicture}
+                      alt="Profile"
+                      className="w-8 h-8 rounded-full object-cover"
+                    />
+                  ) : (
+                    <div className="w-8 h-8 flex items-center justify-center bg-[#af886b] rounded-full text-white font-semibold select-none uppercase">
+                      {userInitial}
+                    </div>
+                  )}
+
                   <ChevronDown className="w-4 h-4" />
                 </button>
               </DropdownMenuTrigger>
@@ -185,9 +198,17 @@ export default function Navbar1() {
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <button className="flex items-center space-x-1 font-medium">
-                  <div className="w-8 h-8 flex items-center justify-center bg-[#af886b] rounded-full text-white">
-                    {userInitial}
-                  </div>
+                 {profilePicture ? (
+                    <img
+                      src={profilePicture}
+                      alt="Profile"
+                      className="w-8 h-8 rounded-full object-cover"
+                    />
+                  ) : (
+                    <div className="w-8 h-8 flex items-center justify-center bg-[#af886b] rounded-full text-white font-semibold select-none uppercase">
+                      {userInitial}
+                    </div>
+                  )}
                   <ChevronDown className="w-4 h-4" />
                 </button>
               </DropdownMenuTrigger>

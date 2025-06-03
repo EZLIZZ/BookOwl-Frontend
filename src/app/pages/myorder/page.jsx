@@ -28,7 +28,7 @@ export default function MyOrders() {
     }
   };
   const handleClick = (id) =>{
-router.push(`/orderdetails/${id}`);
+router.push(`/pages/orderdetails/${id}`);
   }
   return (
     <div className="container max-w-7xl m-auto pt-[100px] px-5 mb-[100px]">
