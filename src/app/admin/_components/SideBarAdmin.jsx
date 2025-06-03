@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import {
   Sidebar,
   SidebarContent,
@@ -22,7 +22,7 @@ import {
   Users,
 } from "lucide-react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+// import { useRouter } from "next/navigation";
 
 const SideItems = [
   {
@@ -83,19 +83,18 @@ const SideItems = [
 ];
 
 export default function SideBarAdmin() {
-  const router = useRouter();
-  const logout = async ()=>{
-  const confirmLogout = confirm("Are you sure you want to Logout?");
+  // const router = useRouter();
+  const logout = async () => {
+    const confirmLogout = confirm("Are you sure you want to Logout?");
     if (!confirmLogout) return;
-try {
-  localStorage.removeItem("token");
-  localStorage.removeItem("role");
-  await $axios.post("/auth/logout");
-  router.push("/");
-}
-catch (error){
-  console.log(error);
-}
+    try {
+      localStorage.removeItem("token");
+      localStorage.removeItem("role");
+      await $axios.post("/auth/logout");
+      window.location.href = "/";
+    } catch (error) {
+      console.log(error);
+    }
   };
   return (
     <Sidebar className="fixed h-screen">
@@ -113,16 +112,16 @@ catch (error){
                     className=" hover:text-amber-900 hover:bg-[#fcf3ec] text-lg "
                     asChild
                   >
-                    {item.id===9 ? (
+                    {item.id === 9 ? (
                       <button onClick={logout}>
                         <span className="">{item.icon}</span>
                         <span>{item.name}</span>
                       </button>
-                    ):(
-                    <Link href={item.link}>
-                      <span className="">{item.icon}</span>
-                      <span>{item.name}</span>
-                    </Link>
+                    ) : (
+                      <Link href={item.link}>
+                        <span className="">{item.icon}</span>
+                        <span>{item.name}</span>
+                      </Link>
                     )}
                   </SidebarMenuButton>
                 </SidebarMenuItem>
