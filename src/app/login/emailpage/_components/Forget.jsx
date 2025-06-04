@@ -4,7 +4,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { useRouter } from "next/navigation";
-import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -22,6 +21,7 @@ import {
 } from "@/components/ui/input-otp";
 import { useState, useEffect } from "react";
 import $axios from "@/lib/axios.instance";
+import { toast } from "react-toastify";
 
 const FormSchema = z
   .object({
@@ -49,7 +49,7 @@ export default function ForgotPassword({ email }) {
 
   const router = useRouter();
   const [otpSent, setOtpSent] = useState(true);
-  const [timer, setTimer] = useState(300);
+  const [timer, setTimer] = useState(120);
   const [intervalId, setIntervalId] = useState(null);
   const [showModal, setShowModal] = useState(true);
   const [showResetForm, setShowResetForm] = useState(false);
@@ -115,11 +115,27 @@ export default function ForgotPassword({ email }) {
     }
   };
 
-  const handleResendOTP = () => {
+ const handleResendOTP = async () => {
+  const email = localStorage.getItem("email");
+
+  if (!email) {
+    toast.error("Email not found. Please restart the process.");
+    return;
+  }
+
+  try {
+    const response = await $axios.post("/auth/resendOtp", { email });
+
+    toast.success(response.data?.message || "A new OTP has been sent to your email!");
     setOtpSent(true);
-    setTimer(120);
-    toast.info("A new OTP has been sent to your mail!");
-  };
+    setTimer(120); // Restart the timer
+
+  } catch (error) {
+    const errorMessage =
+      error?.response?.data?.message || "Failed to resend OTP. Please try again.";
+    toast.error(errorMessage);
+  }
+};
 
   const formatTime = (seconds) => {
     const minutes = Math.floor(seconds / 60);
@@ -153,15 +169,15 @@ export default function ForgotPassword({ email }) {
         <h2 className="text-lg font-semibold text-[#8B3623]">
           Forgot Your Password?
         </h2>
-        <FormDescription className="text-sm text-[#265073] font-serif">
+        {/* <FormDescription className="text-sm text-[#265073] font-serif">
           Please enter the 6-digit OTP sent to your mail to reset your password.
-        </FormDescription>
+        </FormDescription> */}
 
         {/* OTP Verification Section (Hidden when reset form is shown) */}
         {!showResetForm && (
           <>
             <FormDescription className="text-sm text-[#265073] font-serif">
-              Please enter the 6-digit OTP sent to your phone to reset your
+              Please enter the 6-digit OTP sent to your email to reset your
               password.
             </FormDescription>
 

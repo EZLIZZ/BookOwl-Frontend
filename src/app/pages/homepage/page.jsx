@@ -41,7 +41,7 @@ export default function Homepage(){
             <BookCollections />
             {/* <NewArrivals/> */}
             {/* <BestSeller /> */}
-            <End/>
+            {/* <End/> */}
 
             
         

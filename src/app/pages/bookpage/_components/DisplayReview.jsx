@@ -17,7 +17,7 @@ export default function DisplayReview({ data }) {
   const getData = async () => {
     try {
       const response = await $axios.get(`book/getReviewsAndRating/${data._id}`);
-      
+      console.log("reciews",response)
       // Check if the response data exists and has reviews
       if (!response || !response.data || !response.data.data || response.data.data.length === 0) {
         setReviews([]); // Set reviews to an empty array

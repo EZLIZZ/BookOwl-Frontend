@@ -6,7 +6,7 @@ import Link from "next/link"
 export default function FirstDesign() {
   return (
     <div
-      className=" px-[5%] sm:pt-[80px] pt-[100px] bg-[#af886b] text-white p-8 flex flex-col lg:flex-row items-center justify-between"
+      className=" px-[5%] sm:pt-[100px] pt-[100px] bg-[#af886c] text-white p-8 flex flex-col lg:flex-row items-center justify-between"
       data-aos="fade-down"
     >
       {/* Left Section */}
@@ -14,7 +14,7 @@ export default function FirstDesign() {
         className="max-w-xl mb-6 lg:mb-0 lg:mr-14 text-center lg:text-left"
         data-aos="fade-right" // AOS animation for the left section
       >
-        <h1 className="text-2xl md:text-6xl lg:text-7xl font-bold font-serif">
+        <h1 className="text-2xl md:text-5xl lg:text-6xl  font-bold font-serif">
           DISCOVER OUR LATEST BOOK COLLECTIONS
         </h1>
         <p className="text-sm md:text-xl lg:text-2xl font-serif mt-3">

@@ -19,6 +19,7 @@ export default function EmailPage() {
     }
     try {
       const response = await $axios.post("/auth/forgotPassword", {email});
+      localStorage.setItem("email",email);
       if (!response) {
         throw new Error("Error");
       }
