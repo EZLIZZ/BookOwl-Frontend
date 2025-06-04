@@ -13,11 +13,19 @@ import {
 import { Button } from "@/components/ui/button";
 import $axios from "@/lib/axios.instance";
 import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
 export default function DeleteAccount() {
-  const id = localStorage.getItem("id");
-  const router = useRouter();
+const [id, setUserId] = useState(null);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const id = localStorage.getItem("id");
+      setUserId(id);
+    }
+  }, []);
+    const router = useRouter();
   const handledelete = async () => {
     try {
       const response = await $axios.delete(`/userProfile/deleteUser/${id}`);
