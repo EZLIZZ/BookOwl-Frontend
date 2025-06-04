@@ -14,9 +14,21 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Camera } from "lucide-react";
+import { Camera, CloudCog } from "lucide-react";
 import $axios from "@/lib/axios.instance"; // Adjust import path as needed
 import { useRouter } from "next/navigation";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+import { toast } from "react-toastify";
 
 // Schema for form validation using Zod
 const profileSchema = z.object({
@@ -65,7 +77,14 @@ export default function EditProfile() {
       try {
         const response = await $axios.get(`/userProfile/getUserById/${userId}`);
         if (response && response.status === 200) {
+          console.log(response);
           setProfile(response.data.data);
+        }
+        if (response.data.data.profilePicture) {
+          localStorage.setItem(
+            "profilePicture",
+            response.data.data.profilePicture
+          );
         }
       } catch (error) {
         console.error("Error fetching profile:", error);
@@ -100,7 +119,7 @@ export default function EditProfile() {
         updatedData
       );
       console.log("Profile Updated:", UpdateResponse);
-      alert("Profile Updated Successfully!");
+      toast.success("Profile Updated Successfully!");
       router.push("/pages/userdashboard");
     } catch (error) {
       console.error("Error submitting form:", error);
@@ -132,6 +151,8 @@ export default function EditProfile() {
       );
 
       console.log("Profile updated successfully", res.data);
+      window.location.reload();
+      window.location.reload();
     } catch (err) {
       console.error("Error uploading profile picture", err);
     }
@@ -266,14 +287,40 @@ export default function EditProfile() {
                       </FormItem>
                     )}
                   />
+                  <AlertDialog>
+                    <AlertDialogTrigger asChild>
+                      <Button
+                        // type="submit"
+                        className="w-full bg-[#8B3623] text-white"
+                      >
+                        Save Changes
+                      </Button>
+                    </AlertDialogTrigger>
+
+                    <AlertDialogContent>
+                      <AlertDialogHeader>
+                        <AlertDialogTitle className="text-[#8F3623] font-serif text-xl">
+                          Are you sure?
+                        </AlertDialogTitle>
+                        <AlertDialogDescription className="text-[#265073] font-serif text-lg">
+                          Confirm changes  just made?
+                        </AlertDialogDescription>
+                      </AlertDialogHeader>
+                      <AlertDialogFooter>
+                        <AlertDialogCancel className="text-[#8F3623]">
+                          Cancel
+                        </AlertDialogCancel>
+                        <AlertDialogAction
+                          className="bg-[#265073] text-white"
+                          onClick={form.handleSubmit(onSubmit)}
+                        >
+                          Confirm
+                        </AlertDialogAction>
+                      </AlertDialogFooter>
+                    </AlertDialogContent>
+                  </AlertDialog>
 
                   {/* Submit Button */}
-                  <Button
-                    type="submit"
-                    className="w-full bg-[#8B3623] text-white"
-                  >
-                    Save Changes
-                  </Button>
                 </form>
               </Form>
             </div>

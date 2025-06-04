@@ -9,17 +9,17 @@ const UserSidebar = () => {
 
   const menuItems = [
     {label: "My profile", icon: <Home size={18} />, href: "/pages/userdashboard" },
-            {label: "Edit Profile", icon: <Edit size={18} />, href: "/pages/editprofile" },
+    {label: "Edit Profile", icon: <Edit size={18} />, href: "/pages/editprofile" },
 
     {label: "Settings", icon: <Settings size={18} /> , href: "/pages/userdashboard"},
     { label: "Login And Security", icon: <MessageSquare size={18} />, href: "/pages/editaccount" },
-         { label: "Delete", icon: <Delete size={18} />, href: "/pages/deleteaccount" },
+             { label: "Delete", icon: <Delete size={18} />, href: "/pages/deleteaccount" },
 
     // {label:"My orders",icon:<MessageSquare size={18}/>, href:"/pages/userdashboard/myorder"},
   ];
 
   return (
-    <div className="hidden sm:block w-64 bg-[#bd9d86] pt-[80px] ">
+    <div className="w-64 bg-[#bd9d86] pt-[80px] ">
       {/* Profile Icon */}
       <div className="flex justify-center mb-1">
         <UserCircle size={50} className="text-[#8B3623]" />

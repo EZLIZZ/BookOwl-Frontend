@@ -28,9 +28,9 @@ export default function Starting({ data }) {
         () => (
           <div className="flex items-center gap-4">
             <span>Book added to cart!</span>
-            <Button 
+            <Button
               onClick={() => {
-               router.push("/pages/addtocart") // Optional: close the toast manually
+                router.push("/pages/addtocart"); // Optional: close the toast manually
               }}
               className="bg-[#AF886B] hover:opacity-90 text-white px-3 py-1 rounded text-sm"
             >
@@ -111,7 +111,9 @@ export default function Starting({ data }) {
               fill={i < Math.floor(rating) ? "currentColor" : "none"}
             />
           ))}
-          <span className="ml-2 text-gray-600">({rating})</span>
+          <span className="ml-2 text-gray-600">
+            ({Number(rating).toFixed(2)})
+          </span>
         </div>
 
         <p className="text-md sm:text-lg font-semibold text-green-600 mb-2">
@@ -129,7 +131,11 @@ export default function Starting({ data }) {
         </p>
         <p className="text-gray-500">
           <span className="font-bold">Published Date:</span>{" "}
-          {data.publishedDate}
+          {new Date(data.publishedDate).toLocaleDateString("en-US", {
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+          })}
         </p>
         <p className="text-gray-500">
           <span className="font-bold">Language:</span> {data.language}

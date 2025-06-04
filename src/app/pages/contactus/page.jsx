@@ -19,13 +19,14 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Mail, MapPin, Phone } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
+import { toast } from "react-toastify";
 // import { addContact } from "./actions/contact";
 import { z } from "zod";
 const formSchema = z.object({
-  userName: z
-    .string()
-    .min(2, { message: "Name must be at least 2 characters" }),
-  userEmail: z.string().email({ message: "Invalid email address" }),
+  // userName: z
+  //   .string()
+  //   .min(2, { message: "Name must be at least 2 characters" }),
+  // userEmail: z.string().email({ message: "Invalid email address" }),
   subject: z
     .string()
     .min(5, { message: "Subject must be at least 5 characters" }),
@@ -35,33 +36,48 @@ const formSchema = z.object({
 });
 export default function ContactUs() {
   const router = useRouter();
+  const userName = localStorage.getItem("name"); // or "name", depends on your storage key
+  const userEmail = localStorage.getItem("email");
   //   const [state, formAction] = useFormState(addContact, null);
   //   const [isSubmitting, setIsSubmitting] = useState(false);
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      userName: "",
-      userEmail: "",
       subject: "",
       message: "",
     },
   });
   const onSubmit = async (values) => {
+    // or "email"
     // setIsSubmitting(true);
     // await formAction(formData);
     // setIsSubmitting(false);
-    console.log(values);
+    // console.log(values);
+    const payload = {
+      userName,
+      userEmail,
+      subject: values.subject,
+      message: values.message,
+    };
 
-    const response = await $axios.post("/contact/contactUs", values);
-    console.log(response);
-    if (!response) {
-      throw new Error(`HTTP erroe!:Status: ${response.status}`);
-    }
-    if (response.status === 201) {
-      alert("Message received! Thank you for contacting us.");
-      console.log(response);
-      console.log("Submitted values", values);
+    try {
+      const response = await $axios.post("/contact/contactUs", payload);
+      // console.log(response);
+
+      if (!response || response.status !== 201) {
+        throw new Error(`HTTP error! Status: ${response?.status}`);
+      }
+
+      toast.success("Message received! Thank you for contacting us.");
+      // console.log("Submitted values", values);
       router.push("/pages/homepage");
+    } catch (error) {
+      // console.error("Submission failed:", error);
+
+      // Show the error message from caught error if available
+      toast.error(
+        error?.message || "Failed to submit message. Please try again later."
+      );
     }
 
     // console.log(values);
@@ -125,7 +141,7 @@ export default function ContactUs() {
                     <FormItem>
                       <FormLabel>Name</FormLabel>
                       <FormControl>
-                        <Input placeholder="Your name" {...field} />
+                        <Input readOnly placeholder={userName} {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -140,8 +156,9 @@ export default function ContactUs() {
                       <FormControl>
                         <Input
                           type="email"
-                          placeholder="Your email"
+                          placeholder={userEmail}
                           {...field}
+                          readOnly
                         />
                       </FormControl>
                       <FormMessage />

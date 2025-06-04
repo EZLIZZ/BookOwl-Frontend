@@ -40,7 +40,7 @@ export default function OTP() {
 
   const router = useRouter();
   const [otpSent, setOtpSent] = useState(true);
-  const [timer, setTimer] = useState(300);
+  const [timer, setTimer] = useState(120);
   const [intervalId, setIntervalId] = useState(null);
   const [showModal, setShowModal] = useState(true); // State to control modal visibility
   const [loading, setLoading] = useState(false);
