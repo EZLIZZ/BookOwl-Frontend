@@ -1,7 +1,6 @@
 "use client";
 
-// import { useState } from "react";
-// import { useFormState } from "react-dom";
+
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -35,8 +34,14 @@ const formSchema = z.object({
 });
 export default function ContactForm() {
   const router = useRouter();
-  const userName = localStorage.getItem("name"); // or "name", depends on your storage key
-  const userEmail = localStorage.getItem("email");
+ const [userName, setUserName] = useState("");
+  const [userEmail, setUserEmail] = useState("");
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      setUserName(localStorage.getItem("name") || "");
+      setUserEmail(localStorage.getItem("email") || "");
+    }
+  }, []);
   //   const [state, formAction] = useFormState(addContact, null);
   //   const [isSubmitting, setIsSubmitting] = useState(false);
   const form = useForm({
