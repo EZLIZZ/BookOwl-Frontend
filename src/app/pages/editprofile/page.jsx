@@ -14,7 +14,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Camera, CloudCog } from "lucide-react";
+import { Camera} from "lucide-react";
 import $axios from "@/lib/axios.instance"; // Adjust import path as needed
 import { useRouter } from "next/navigation";
 import {

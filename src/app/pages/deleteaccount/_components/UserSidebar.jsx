@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
-import { Home, MessageSquare, UserCircle, Settings, Edit, Delete } from "lucide-react";
+import { Home, UserCircle, Settings, Edit, Delete } from "lucide-react";
 
 const UserSidebar = () => {
   const router = useRouter();
@@ -12,7 +12,6 @@ const UserSidebar = () => {
     {label: "Edit Profile", icon: <Edit size={18} />, href: "/pages/editprofile" },
 
     {label: "Settings", icon: <Settings size={18} /> , href: "/pages/userdashboard"},
-    { label: "Login And Security", icon: <MessageSquare size={18} />, href: "/pages/editaccount" },
              { label: "Delete", icon: <Delete size={18} />, href: "/pages/deleteaccount" },
 
     // {label:"My orders",icon:<MessageSquare size={18}/>, href:"/pages/userdashboard/myorder"},

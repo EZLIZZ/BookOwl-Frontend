@@ -6,7 +6,7 @@ import Firstdesign from "./_components/firstdesign";
 import CollectionCarousel from "./_components/CollectionCarousel";
 import DealsCarousel from "./_components/DealsCarousel";
 import BookCollections from  "./_components/BookCollections"
-import End from "./_components/End"
+// import End from "./_components/End"
 import { useEffect, useState } from "react";
 import $axios from "@/lib/axios.instance";
 

@@ -11,9 +11,6 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import $axios from "@/lib/axios.instance";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
@@ -24,7 +21,7 @@ export default function DeleteAccount() {
   const handledelete = async () => {
     try {
       const response = await $axios.delete(`/userProfile/deleteUser/${id}`);
-      // console.log(response);
+      console.log(response);
       localStorage.clear();
       toast.success("Account succesfully deleted");
       router.push("/");
@@ -48,7 +45,7 @@ export default function DeleteAccount() {
             <li>Your profile and personal data will be erased.</li>
             <li>Your reviews and other contributions will be removed.</li>
             <li>You will lose access to all services tied to your account.</li>
-            <li>Please confirm only if you're absolutely sure.</li>
+            <li>Please confirm only if you &apos;re absolutely sure.</li>
           </ul>
           <div className="flex justify-end">
             <AlertDialog>
